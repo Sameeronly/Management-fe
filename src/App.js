@@ -1,24 +1,27 @@
-import logo from './logo.svg';
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
+import ZForm from './components/ZForm';
+import Sucess from './components/Sucess';
+import Status from './components/Status';
+import React from 'react';
 import './App.css';
+export const CommonContext = React.createContext();
+
+const apiurl = 'http://localhost:8000/'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <BrowserRouter>
+    <CommonContext.Provider value = {{apiurl}}>
+    <Routes>
+    <Route path='/new-issue' element={<ZForm/>}/>
+    <Route path='/sucess/' element={<Sucess/>}/>
+    <Route path='/ticket/:id' element={<Status/>}/>
+    <Route path='*' element={<Navigate to = '/new-issue'/>}/>
+    </Routes>
+    </CommonContext.Provider>
+    </BrowserRouter>
+    </>
   );
 }
 
